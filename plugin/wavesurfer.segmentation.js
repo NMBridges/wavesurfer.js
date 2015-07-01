@@ -116,7 +116,6 @@
             var backend = this.wavesurfer.backend,
                 wsParams = this.wavesurfer.params,
                 duration = backend.getDuration() * 1000;
-            window.alert(duration);
             
             if (wsParams.fillParent && !wsParams.scrollParent) {
                 var width = this.drawer.getWidth();
@@ -124,61 +123,29 @@
                 width = this.drawer.wrapper.scrollWidth * wsParams.pixelRatio;
             }
             var pixelsPerMilliSecond = width/duration;
-
-
             
             if (duration > 0) {
                 var curPixel = 0,
                     curMilliseconds = 0,
                     totalMilliseconds = parseInt(duration, 10) + 1,
                     formatTime = function(milliseconds) {
-                        var secondes = parseInt(milliseconds / 1000),
-                            milliseconds = parseInt(milliseconds % 1000);
+                        var secondes = parseInt(milliseconds / 1000);
+                        milliseconds = parseInt(milliseconds % 1000);
                         return '' + secondes + ':' + milliseconds;
                     };
-
-                if (pixelsPerMilliSecond * 1 >= 25) {
-                    var timeInterval = 1;
-                    var primaryLabelInterval = 10;
-                    var secondaryLabelInterval = 5;
-                } else if (pixelsPerMilliSecond * 5 >= 25) {
-                    var timeInterval = 5;
-                    var primaryLabelInterval = 6;
-                    var secondaryLabelInterval = 2;
-                } else if (pixelsPerMilliSecond * 15 >= 25) {
-                    var timeInterval = 15;
-                    var primaryLabelInterval = 4;
-                    var secondaryLabelInterval = 2;
-                } else {
-                    var timeInterval = 60;
-                    var primaryLabelInterval = 4;
-                    var secondaryLabelInterval = 2;
-                }
 
                 var height1 = this.height - 4,
                     height2 = (this.height * (this.notchPercentHeight / 100.0)) - 4,
                     fontSize = this.fontSize * wsParams.pixelRatio;
 
-                for (var i = 0; i < totalMilliseconds/timeInterval; i++) {
-                    if (i % primaryLabelInterval == 0) {
-                        this.timeCc.fillStyle = this.primaryColor;
-                        this.timeCc.fillRect(curPixel, 0, 1, height1);
-                        this.timeCc.font = fontSize + 'px ' + this.fontFamily;
-                        this.timeCc.fillStyle = this.primaryFontColor;
-                        this.timeCc.fillText(formatTime(curMilliseconds), curPixel + 5, height1);
-                    } else if (i % secondaryLabelInterval == 0) {
-                        this.timeCc.fillStyle = this.secondaryColor;
-                        this.timeCc.fillRect(curPixel, 0, 1, height1);
-                        this.timeCc.font = fontSize + 'px ' + this.fontFamily;
-                        this.timeCc.fillStyle = this.secondaryFontColor;
-                        this.timeCc.fillText(formatTime(curMilliseconds), curPixel + 5, height1);
-                    } else {
-                        this.timeCc.fillStyle = this.secondaryColor;
-                        this.timeCc.fillRect(curPixel, 0, 1, height2);
-                    }
-
-                    curMilliseconds += timeInterval;
-                    curPixel += pixelsPerMilliSecond * timeInterval;
+                var start = 0;
+                for (var i in list_phones) {
+                    this.timeCc.fillStyle = this.primaryColor;
+                    this.timeCc.fillRect(start * pixelsPerMilliSecond, 0, 1, height1);
+                    this.timeCc.font = fontSize + 'px ' + this.fontFamily;
+                    this.timeCc.fillStyle = this.primaryFontColor;
+                    this.timeCc.fillText(list_phones[i].label, start * pixelsPerMilliSecond + list_phones[i].duration * pixelsPerMilliSecond / 2, height1);
+                    start += list_phones[i].duration;
                 }
             }
         },
