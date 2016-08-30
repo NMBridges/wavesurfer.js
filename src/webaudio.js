@@ -114,8 +114,9 @@ WaveSurfer.WebAudio = {
 
             if (time >= my.getDuration()) {
                 my.setState(my.FINISHED_STATE);
+                my.fireEvent('pause');
             } else if (time >= my.scheduledPause) {
-                my.setState(my.PAUSED_STATE);
+                my.pause();
             } else if (my.state === my.states[my.PLAYING_STATE]) {
                 my.fireEvent('audioprocess', time);
             }
@@ -175,9 +176,22 @@ WaveSurfer.WebAudio = {
     },
 
     /**
-     * @returns {Array} Array of peaks or array of arrays of peaks.
+     * Set pre-decoded peaks.
+     */
+    setPeaks: function (peaks) {
+        this.peaks = peaks;
+    },
+
+    /**
+     * Compute the max and min value of the waveform when broken into
+     * <length> subranges.
+     * @param {Number} How many subranges to break the waveform into.
+     * @returns {Array} Array of 2*<length> peaks or array of arrays
+     * of peaks consisting of (max, min) values for each subrange.
      */
     getPeaks: function (length) {
+        if (this.peaks) { return this.peaks; }
+
         var sampleSize = this.buffer.length / length;
         var sampleStep = ~~(sampleSize / 10) || 1;
         var channels = this.buffer.numberOfChannels;
@@ -191,20 +205,30 @@ WaveSurfer.WebAudio = {
             for (var i = 0; i < length; i++) {
                 var start = ~~(i * sampleSize);
                 var end = ~~(start + sampleSize);
+                var min = 0;
                 var max = 0;
+
                 for (var j = start; j < end; j += sampleStep) {
                     var value = chan[j];
+
                     if (value > max) {
                         max = value;
-                    // faster than Math.abs
-                    } else if (-value > max) {
-                        max = -value;
+                    }
+
+                    if (value < min) {
+                        min = value;
                     }
                 }
-                peaks[i] = max;
 
-                if (c == 0 || max > mergedPeaks[i]) {
-                    mergedPeaks[i] = max;
+                peaks[2 * i] = max;
+                peaks[2 * i + 1] = min;
+
+                if (c == 0 || max > mergedPeaks[2 * i]) {
+                    mergedPeaks[2 * i] = max;
+                }
+
+                if (c == 0 || min < mergedPeaks[2 * i + 1]) {
+                    mergedPeaks[2 * i + 1] = min;
                 }
             }
         }
@@ -267,6 +291,8 @@ WaveSurfer.WebAudio = {
     },
 
     seekTo: function (start, end) {
+        if (!this.buffer) { return; }
+
         this.scheduledPause = null;
 
         if (start == null) {
@@ -302,6 +328,8 @@ WaveSurfer.WebAudio = {
      * relative to the beginning of a clip.
      */
     play: function (start, end) {
+        if (!this.buffer) { return; }
+
         // need to re-create source on each playback
         this.createSource();
 
@@ -315,6 +343,8 @@ WaveSurfer.WebAudio = {
         this.source.start(0, start, end - start);
 
         this.setState(this.PLAYING_STATE);
+
+        this.fireEvent('play');
     },
 
     /**
@@ -327,6 +357,8 @@ WaveSurfer.WebAudio = {
         this.source && this.source.stop(0);
 
         this.setState(this.PAUSED_STATE);
+
+        this.fireEvent('pause');
     },
 
     /**

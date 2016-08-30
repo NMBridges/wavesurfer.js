@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>wavesurfer.js | Split Channel Example</title>
+        <title>wavesurfer.js | Regions</title>
 
         <link href="data:image/gif;" rel="icon" type="image/x-icon" />
 
@@ -11,14 +11,19 @@
 
         <link rel="stylesheet" href="../css/style.css" />
         <link rel="stylesheet" href="../css/ribbon.css" />
+        <link rel="stylesheet" href="app.css" />
         <link rel="screenshot" itemprop="screenshot" href="https://katspaugh.github.io/wavesurfer.js/example/screenshot.png" />
 
         <!-- wavesurfer.js -->
         <script src="../../dist/wavesurfer.min.js"></script>
 
-        <script src="../../plugin/wavesurfer.regions.js"></script>
+        <!-- plugins -->
+        <script src="../../dist/plugin/wavesurfer.timeline.min.js"></script>
+        <script src="../../dist/plugin/wavesurfer.regions.min.js"></script>
+        <script src="../../dist/plugin/wavesurfer.minimap.min.js"></script>
 
-        <!-- Demo -->
+        <!-- App -->
+        <script src="../trivia.js"></script>
         <script src="app.js"></script>
     </head>
 
@@ -29,12 +34,12 @@
                     <li><a href="/"><i class="glyphicon glyphicon-home"></i></a></li>
                 </ul>
 
-                <h1 itemprop="name">Split Channel Waveforms</h1>
+                <h1 itemprop="name">wavesurfer.js Regions</h1>
             </div>
 
             <div id="demo">
                 <div id="waveform">
-                    <!-- Here be the waveform -->
+                    <!-- Here be waveform -->
                 </div>
 
                 <div class="controls">
@@ -48,43 +53,19 @@
                 </div>
             </div>
 
-            <p class="lead pull-center" id="drop">
-                Drag'n'drop your
-                <i class="glyphicon glyphicon-music"></i>-file
-                here!
-            </p>
-
-            <div class="row marketing">
-                <h3>How to Enable Split Channels</h3>
-
-                <p>
-                    Set the <code>splitChannels</code> option to <code>true</code>.
-                </p>
-
-                <p>
-<pre><code>var wavesurfer = WaveSurfer.create({
-    container: document.querySelector('#wave'),
-    splitChannels: true
-});
-</code></pre>
-                </p>
-
-            </div>
-
             <div class="footer row">
                 <div class="col-sm-12">
                     <a rel="license" href="https://creativecommons.org/licenses/by/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/3.0/80x15.png" /></a>
                 </div>
 
-                <div class="col-sm-7">
-                    <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">wavesurfer.js</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/katspaugh/wavesurfer.js" property="cc:attributionName" rel="cc:attributionURL">katspaugh</a> is licensed under a&nbsp;<a style="white-space: nowrap" rel="license" href="https://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+                <div class="col-sm-8">
+                    <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">wavesurfer.js</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/katspaugh/wavesurfer.js" property="cc:attributionName" rel="cc:attributionURL">katspaugh</a> is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
                 </div>
 
-                <div class="col-sm-5">
-                    <noindex>
-                        Demo music track is <a href="https://www.jamendo.com/en/track/205154/transistor" rel="nofollow"><b>Transistor</b> <span class="muted">by</span>&nbsp;<b>Transistor</b></a> (CC BY-NC-ND 3.0). Thanks!
-                    </noindex>
-
+                <div class="col-sm-4">
+                    <p>
+                        The sound file is from <a href="https://librivox.org/librivox-multilingual-short-works-collection-001-by-various/">librivox.org</a>.
+                    </p>
                 </div>
             </div>
         </div>
