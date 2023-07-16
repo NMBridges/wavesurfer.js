@@ -1,4 +1,4 @@
-# This was modified for the purposes of another project. Please disregard this repository.
+# This was modified from the original repository for the purposes of another project. Please disregard this repository.
 
 # [wavesurfer.js](https://wavesurfer-js.org)
 
