@@ -487,6 +487,35 @@ WaveSurfer.addRegion = function (options) {
     return this.regions.add(options);
 };
 
+WaveSurfer.setFileName = function(filename) {
+    this.filename = filename;
+};
+
+WaveSurfer.export = function () {
+    const sampleRate = 22050;
+    var ranges = []
+    Object.keys(this.regions.list).forEach(function (id) {
+        const start = Math.round(this.regions.list[id].start * sampleRate);
+        const end = Math.round(this.regions.list[id].end * sampleRate);
+        ranges.push([start, end]);
+        console.log(this.regions);
+        console.log(start);
+        console.log(end);
+
+    }, this);
+
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(ranges));
+    element.setAttribute('download', this.filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+};
+
 WaveSurfer.clearRegions = function () {
     this.regions && this.regions.clear();
 };

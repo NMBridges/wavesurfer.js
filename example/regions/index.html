@@ -11,16 +11,15 @@
 
         <link rel="stylesheet" href="../css/style.css" />
         <link rel="stylesheet" href="../css/ribbon.css" />
-        <link rel="stylesheet" href="app.css" />
         <link rel="screenshot" itemprop="screenshot" href="https://katspaugh.github.io/wavesurfer.js/example/screenshot.png" />
 
         <!-- wavesurfer.js -->
         <script src="../../dist/wavesurfer.min.js"></script>
 
         <!-- plugins -->
-        <script src="../../dist/plugin/wavesurfer.timeline.min.js"></script>
-        <script src="../../dist/plugin/wavesurfer.regions.min.js"></script>
-        <script src="../../dist/plugin/wavesurfer.minimap.min.js"></script>
+        <script src="../../plugin/wavesurfer.timeline.js"></script>
+        <script src="../../plugin/wavesurfer.regions.js"></script>
+        <script src="../../plugin/wavesurfer.minimap.js"></script>
 
         <!-- App -->
         <script src="../trivia.js"></script>
@@ -49,6 +48,9 @@
                         /
                         <i class="glyphicon glyphicon-pause"></i>
                         Pause
+                    </button>
+                    <button class="btn btn-primary" data-action="export">
+                        Export
                     </button>
                 </div>
             </div>
