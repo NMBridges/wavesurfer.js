@@ -1,3 +1,5 @@
+# This was modified from the original repository for the purposes of another project. Please disregard this repository.
+
 # [wavesurfer.js](https://wavesurfer-js.org)
 
 [![npm version](https://img.shields.io/npm/v/wavesurfer.js.svg?style=flat)](https://www.npmjs.com/package/wavesurfer.js)
