@@ -492,27 +492,26 @@ WaveSurfer.setFileName = function(filename) {
 };
 
 WaveSurfer.export = function () {
+    // Gets the start and end time of each of the ranges
     const sampleRate = 22050;
     var ranges = []
     Object.keys(this.regions.list).forEach(function (id) {
         const start = Math.round(this.regions.list[id].start * sampleRate);
         const end = Math.round(this.regions.list[id].end * sampleRate);
-        ranges.push([start, end]);
+        ranges.push("(" + start + "," + end + ")");
         console.log(this.regions);
         console.log(start);
         console.log(end);
 
     }, this);
 
+    // Downloads the ranges
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(ranges));
     element.setAttribute('download', this.filename);
-
     element.style.display = 'none';
     document.body.appendChild(element);
-
     element.click();
-
     document.body.removeChild(element);
 };
 
